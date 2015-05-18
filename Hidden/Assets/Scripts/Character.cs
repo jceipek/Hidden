@@ -40,7 +40,7 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnDisable () {
-		_worldEntity.Simulators += Simulate;
+		_worldEntity.Simulators -= Simulate;
 	}
 
 	void Update () {

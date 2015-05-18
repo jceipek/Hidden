@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WorldEntity : MonoBehaviour {
 
+	private bool _isColliding;
+
 	[SerializeField]
 	IntVector _location;
 
