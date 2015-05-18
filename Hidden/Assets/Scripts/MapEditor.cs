@@ -9,7 +9,7 @@ public class MapEditor : MonoBehaviour
     GameObject Char1;
     [SerializeField]
     GameObject Char2;
-    private string _sLevelName = "map.xml";
+    private string _sLevelName = "Levels/map.xml";
 
     WorldManager worldManage;
 
@@ -55,9 +55,6 @@ public class MapEditor : MonoBehaviour
                 tMap[i].tileType = TileType.Empty;
                 break;
             }
-            
-            print(i+" "+tMap[i].vTilePosition+" "+tMap[i].tileType);
-
         }
         worldManage.GenerateBasicMap(tMap);
         //Char1.GetComponent<WorldEntity>().Location = toLoad.vChar1StartPos;
