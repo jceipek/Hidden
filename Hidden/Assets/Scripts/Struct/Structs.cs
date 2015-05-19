@@ -8,6 +8,7 @@ public struct SavableLevel
         public IntVector vDim;
         public IntVector vChar1StartPos, vChar2StartPos;
         public Tile[] tMap;
+        public PusherInXML[] pPushers;
     }
 
     public struct Tile
@@ -23,6 +24,18 @@ public struct SavableLevel
         ,Floor
         ,Wall
     }
+    public struct PusherInXML
+    {
+        public IntVector vPosition;
+        public bool isControlled;
+        public string sDirection;
+        public Direction direction;
+        public int range;
+        public int ID;
+        public float timeInterval;
+    }
+
+
     public enum MoveResult
     {
         Move

@@ -14,6 +14,9 @@ public class WorldManager : MonoBehaviour
 
     List<WorldEntity> _entities = new List<WorldEntity>();
 
+    [SerializeField]
+    private GameObject _pusherPreFab;
+
     public static WorldManager g;
 
     public void RegisterEntity(WorldEntity e)
@@ -62,6 +65,9 @@ public class WorldManager : MonoBehaviour
         }
         mapEditor.SetMap();
         mapEditor.SetCharacters();
+        mapEditor.SetPushers();
+        
+
         
         //Events.g.Raise(new WorldManagerReadyEvent());
 //default map
@@ -183,8 +189,24 @@ public class WorldManager : MonoBehaviour
     
     private void PushEntity(WorldEntity entity, Direction direction)
     {
-        entity.Location=Destination(entity.Location, direction);
+        entity.Location = Destination(entity.Location, direction);
         entity.Pushed(direction);
+    }
+
+    public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, int range, int ID, float timeInterval)
+    {
+        if(_world[location.x,location.y]==TileType.Wall)
+        {
+            print("error! entity on the wall!");
+        }
+        Instantiate(_pusherPreFab);
+        _pusherPreFab.GetComponent<WorldEntity>().Location = location;
+        var pusher = _pusherPreFab.GetComponent<Pusher>();
+        pusher.direction = direction;
+        pusher.isControlled = isControlled;
+        pusher.iRange = range;
+        pusher.iID = ID;
+        pusher.fTimeInterval = timeInterval;
     }
 
     void OnDrawGizmos()

@@ -9,8 +9,7 @@ public class MapEditor : MonoBehaviour
     GameObject Char1;
     [SerializeField]
     GameObject Char2;
-    [SerializeField]
-    private GameObject _pusherPreFab;
+    
     private string _sLevelName = "Levels/map.xml";
 
     WorldManager worldManage;
@@ -23,30 +22,12 @@ public class MapEditor : MonoBehaviour
 
     public void LoadFile()
     {
-
         //read the file
         XmlSerializer levelDeserializer = new XmlSerializer(typeof(SavableLevel));
         FileStream levelReader = new FileStream(Path.Combine(Application.dataPath, _sLevelName), FileMode.Open); // TODO(Julian): Varying filenames
         XmlReader xmlReader = XmlReader.Create(levelReader);
         toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
         levelReader.Close();
-/*
-        // TODO(Julian): Destroy the characters!
-        SavableEditorBlock[] loadableBlocks = toLoad.levelBlocks;
-        toLoad.worldDims = new Vector2(_width, _height);
-        for (int i = 0; i < blocks.Length; i++) {
-            SavableEditorBlock currBlock = loadableBlocks[i];
-            for (int j = 0; j < _spawnablePrefabs.Length; j++) {
-                IEditorBlock blockRef = _spawnablePrefabs[j].GetInterface<IEditorBlock>();
-                if (blockRef.TypeName == currBlock.type) {
-                    GameObject createdObject = (Instantiate(_spawnablePrefabs[j], currBlock.position, Quaternion.Euler(currBlock.rotation)) as GameObject);
-                    createdObject.name = currBlock.name;
-                    // TODO(Julian): Use the scale!
-                    // TODO(Julian): Use the editor pivot!
-                    break;
-                }
-            }
-        }*/
     }
     public IntVector GetDim()
     {
@@ -57,9 +38,28 @@ public class MapEditor : MonoBehaviour
         Char1.GetComponent<WorldEntity>().Location = toLoad.vChar1StartPos;
         Char2.GetComponent<WorldEntity>().Location = toLoad.vChar2StartPos;
     }
-    public void SetEntities()
+    public void SetPushers()
     {
-
+        PusherInXML[] pushers = toLoad.pPushers;
+        for (int i = 0; i < pushers.Length; i++)
+        {
+            switch (pushers[i].sDirection)
+            {
+                case "North":
+                pushers[i].direction=Direction.North;
+                break;
+                case "South":
+                pushers[i].direction=Direction.South;
+                break;
+                case "West":
+                pushers[i].direction=Direction.West;
+                break;
+                case "East":
+                pushers[i].direction=Direction.East;
+                break;
+            }           
+            worldManage.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
+        }
     }
     public void SetMap()
     {

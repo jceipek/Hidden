@@ -91,15 +91,15 @@ public class Character : MonoBehaviour
             {
                 case MoveResult.Move:
                     Move();
-                    print("move");
+                    //print("move");
                     break;
                 case MoveResult.Stuck:
                     Stuck();
-                    print("stuck");
+                    //print("stuck");
                     break;
                 case MoveResult.Push:
                     Push();
-                    print("push");
+                    //print("push");
                     break;
                 default:
                     break;

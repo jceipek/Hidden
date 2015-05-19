@@ -14,6 +14,52 @@
 		<x>20</x>
 		<y>20</y>
 	</vDim>
+	<pPushers>
+		<PusherInXML>
+			<vPosition>
+				<x>5</x>
+				<y>5</y>
+			</vPosition>
+			<isControlled>0</isControlled>
+			<sDirection>North</sDirection>
+			<range>3</range>
+			<ID>0</ID>
+			<timeInterval>0.8</timeInterval>
+		</PusherInXML>
+		<PusherInXML>
+			<vPosition>
+				<x>6</x>
+				<y>6</y>
+			</vPosition>
+			<isControlled>0</isControlled>
+			<sDirection>South</sDirection>
+			<range>4</range>
+			<ID>0</ID>
+			<timeInterval>0.8</timeInterval>
+		</PusherInXML>
+		<PusherInXML>
+			<vPosition>
+				<x>7</x>
+				<y>7</y>
+			</vPosition>
+			<isControlled>0</isControlled>
+			<sDirection>South</sDirection>
+			<range>4</range>
+			<ID>0</ID>
+			<timeInterval>0.8</timeInterval>
+		</PusherInXML>
+		<PusherInXML>
+			<vPosition>
+				<x>8</x>
+				<y>8</y>
+			</vPosition>
+			<isControlled>0</isControlled>
+			<sDirection>South</sDirection>
+			<range>4</range>
+			<ID>0</ID>
+			<timeInterval>0.8</timeInterval>
+		</PusherInXML>
+	</pPushers>
 	<tMap>
 		<Tile>
 			<vTilePosition>
