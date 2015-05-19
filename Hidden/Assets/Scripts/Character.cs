@@ -72,8 +72,17 @@ public class Character : MonoBehaviour
             _direction = Direction.South;
             _move = true;
         }
+
+        if (_worldEntity.isPushed)
+        {
+            Pushed(_worldEntity.pushedDirection);
+        }
     }
 
+    private void Pushed(Direction direction)
+    {
+        //play pushed animation
+    }
     private void Simulate()
     {
         if (_move)

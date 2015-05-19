@@ -179,19 +179,12 @@ public class WorldManager : MonoBehaviour
             }
             return MoveResult.Move;
         }
-
     }
+    
     private void PushEntity(WorldEntity entity, Direction direction)
     {
-        /*IntVector l = entity.Location;
-        print("l before "+l);
-        _entityMap[l.x, l.y].Remove(entity);
-        l = Destination(l, direction);
-        entity.Location=l;
-        _entityMap[l.x, l.y].Add(entity);
-        print("l after "+l);*/
-
         entity.Location=Destination(entity.Location, direction);
+        entity.Pushed(direction);
     }
 
     void OnDrawGizmos()

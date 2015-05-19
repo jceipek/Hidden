@@ -9,6 +9,9 @@ public class WorldEntity : MonoBehaviour {
 		set { _collidingType = value; }
 	}
 
+	public bool isPushed;
+	public Direction pushedDirection;
+
 	[SerializeField]
 	IntVector _location;
 
@@ -35,6 +38,10 @@ public class WorldEntity : MonoBehaviour {
 
 	void Start () {
 		RegisterMe();
+	}
+	public void Pushed(Direction direction){
+		isPushed=true;
+		pushedDirection=direction;
 	}
 
 	public delegate void SimulatorDelegates();
