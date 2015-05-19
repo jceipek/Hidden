@@ -46,7 +46,7 @@ public class WorldManager : MonoBehaviour
         var mapEditor = gameObject.GetComponent<MapEditor>();
         mapEditor.LoadFile();
 
-        _dims=mapEditor.GetDim();
+        _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
@@ -94,7 +94,8 @@ public class WorldManager : MonoBehaviour
         }
 
     }
-    private void ClearMap(){
+    private void ClearMap()
+    {
         for (int x = 0; x < _dims.x; x++)
         {
             for (int y = 0; y < _dims.y; y++)
@@ -103,6 +104,94 @@ public class WorldManager : MonoBehaviour
             }
 
         }
+    }
+    private IntVector Destination(IntVector from, Direction direction)
+    {
+        IntVector destination = from;
+        switch (direction)
+        {
+            case Direction.North:
+                destination = new IntVector(from.x, from.y + 1);
+                break;
+            case Direction.South:
+                destination = new IntVector(from.x, from.y - 1);
+                break;
+            case Direction.West:
+                destination = new IntVector(from.x - 1, from.y);
+                break;
+            case Direction.East:
+                destination = new IntVector(from.x + 1, from.y);
+                break;
+            default:
+                break;
+        }
+        return destination;
+    }
+
+    public MoveResult CanMove(IntVector from, Direction direction)
+    {
+        IntVector destination = Destination(from, direction);
+
+        int x = destination.x;
+        int y = destination.y;
+        if (_world[x, y] == TileType.Wall)
+        {
+            return MoveResult.Stuck;
+        }
+        else
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                if (_entities[i].Location == destination)
+                {
+                    switch (_entities[i].CollidingType)
+                    {
+                        case EntityCollidingType.Empty:
+                            return MoveResult.Move;
+                            break;
+                        case EntityCollidingType.Colliding:
+                            return MoveResult.Stuck;
+                            break;
+                        case EntityCollidingType.Pushable:
+                            switch (CanMove(destination, direction))
+                            {
+                                case MoveResult.Move:
+                                    PushEntity(_entities[i], direction);
+                                    return MoveResult.Push;
+                                    break;
+                                case MoveResult.Stuck:
+                                    return MoveResult.Stuck;
+                                    break;
+                                case MoveResult.Push:
+                                    PushEntity(_entities[i], direction);
+                                    return MoveResult.Push;
+                                    break;
+                                default:
+                                    return MoveResult.Stuck;
+                                    break;
+                            }
+                            break;
+                        default:
+                            return MoveResult.Stuck;
+                            break;                        
+                    }
+                }
+            }
+            return MoveResult.Move;
+        }
+
+    }
+    private void PushEntity(WorldEntity entity, Direction direction)
+    {
+        /*IntVector l = entity.Location;
+        print("l before "+l);
+        _entityMap[l.x, l.y].Remove(entity);
+        l = Destination(l, direction);
+        entity.Location=l;
+        _entityMap[l.x, l.y].Add(entity);
+        print("l after "+l);*/
+
+        entity.Location=Destination(entity.Location, direction);
     }
 
     void OnDrawGizmos()

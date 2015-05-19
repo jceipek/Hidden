@@ -3,7 +3,11 @@ using System.Collections;
 
 public class WorldEntity : MonoBehaviour {
 
-	private bool _isColliding;
+	private EntityCollidingType _collidingType;
+	public EntityCollidingType CollidingType {
+		get { return _collidingType; }
+		set { _collidingType = value; }
+	}
 
 	[SerializeField]
 	IntVector _location;

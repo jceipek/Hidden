@@ -23,6 +23,24 @@ public struct SavableLevel
         ,Floor
         ,Wall
     }
+    public enum MoveResult
+    {
+        Move
+        ,Push
+        ,Stuck
+    }
+    public enum EntityCollidingType
+    {
+        Empty
+        ,Colliding
+        ,Pushable
+    }
+    public enum Direction {
+        North,
+        South,
+        East,
+        West
+    }
 
 public class Structs : MonoBehaviour {
 	
