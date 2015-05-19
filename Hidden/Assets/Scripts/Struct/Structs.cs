@@ -5,6 +5,7 @@ public struct SavableLevel
     {
         public string sLevelName;
         public int iLevelType;
+        public IntVector vDim;
         public IntVector vChar1StartPos, vChar2StartPos;
         public Tile[] tMap;
     }

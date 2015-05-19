@@ -40,7 +40,13 @@ public class WorldManager : MonoBehaviour
         {
             Destroy(this);
         }
+        _world = new TileType[_dims.x, _dims.y];
+        ClearMap();
 
+        var mapEditor = gameObject.GetComponent<MapEditor>();
+        mapEditor.LoadFile();
+
+        _dims=mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
@@ -54,8 +60,9 @@ public class WorldManager : MonoBehaviour
             //_world[x, 0] = TileType.Wall;
             //_world[x, _dims.y - 1] = TileType.Wall;
         }
-        var mapEditor = gameObject.GetComponent<MapEditor>();
-        mapEditor.Load();
+        mapEditor.SetMap();
+        mapEditor.SetCharacters();
+        
         //Events.g.Raise(new WorldManagerReadyEvent());
 //default map
         /*
@@ -86,6 +93,16 @@ public class WorldManager : MonoBehaviour
             _world[x, y] = tMap[i].tileType;
         }
 
+    }
+    private void ClearMap(){
+        for (int x = 0; x < _dims.x; x++)
+        {
+            for (int y = 0; y < _dims.y; y++)
+            {
+                _world[x, y] = TileType.Empty;
+            }
+
+        }
     }
 
     void OnDrawGizmos()
