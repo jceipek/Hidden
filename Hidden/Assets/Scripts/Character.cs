@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
     private IntVector _input;
 
     private Direction _direction;
-    private bool _move;
+    private bool _bMove;
 
     [SerializeField]
     Direction _facing;
@@ -52,25 +52,25 @@ public class Character : MonoBehaviour
         {
             _input.x -= 1;
             _direction = Direction.West;
-            _move = true;
+            _bMove = true;
         }
         if (Input.GetKeyDown(_rightKey))
         {
             _input.x += 1;
             _direction = Direction.East;
-            _move = true;
+            _bMove = true;
         }
         if (Input.GetKeyDown(_upKey))
         {
             _input.y += 1;
             _direction = Direction.North;
-            _move = true;
+            _bMove = true;
         }
         if (Input.GetKeyDown(_downKey))
         {
             _input.y -= 1;
             _direction = Direction.South;
-            _move = true;
+            _bMove = true;
         }
 
         if (_worldEntity.isPushed)
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour
     }
     private void Simulate()
     {
-        if (_move)
+        if (_bMove)
         {
             switch (WorldManager.g.CanMove(_worldEntity.Location, _direction))
             {
@@ -115,20 +115,20 @@ public class Character : MonoBehaviour
         {
             vec.x += _input.x;
             _input.x = 0;
-            _move = false;
+            _bMove = false;
         }
         else if (_input.y != 0)
         {
             vec.y += _input.y;
             _input.y = 0;
-            _move = false;
+            _bMove = false;
         }
         _worldEntity.Location = vec;
     }
     private void Stuck()
     {
         //play stuck animation
-        _move = false;
+        _bMove = false;
     }
     private void Move()
     {
@@ -139,13 +139,13 @@ public class Character : MonoBehaviour
         {
             vec.x += _input.x;
             _input.x = 0;
-            _move = false;
+            _bMove = false;
         }
         else if (_input.y != 0)
         {
             vec.y += _input.y;
             _input.y = 0;
-            _move = false;
+            _bMove = false;
         }
         _worldEntity.Location = vec;
     }

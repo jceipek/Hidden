@@ -1,55 +1,67 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WorldEntity : MonoBehaviour {
+public class WorldEntity : MonoBehaviour
+{
 
-	private EntityCollidingType _collidingType;
-	public EntityCollidingType CollidingType {
-		get { return _collidingType; }
-		set { _collidingType = value; }
-	}
+    private EntityCollidingType _collidingType;
+    public EntityCollidingType CollidingType
+    {
+        get { return _collidingType; }
+        set { _collidingType = value; }
+    }
+    [HideInInspector]
+    public bool isPushed;
+    [HideInInspector]
+    public Direction pushedDirection;
 
-	public bool isPushed;
-	public Direction pushedDirection;
+    [SerializeField]
+    IntVector _location;
 
-	[SerializeField]
-	IntVector _location;
+    public IntVector Location
+    {
+        get { return _location; }
+        set { _location = value; }
+    }
 
-	public IntVector Location {
-		get { return _location; }
-		set { _location = value; }
-	}
+    private bool _registered = false;
 
-	private bool _registered = false;
+    public void RegisterMe()
+    {
+        if (!_registered)
+        {
+            WorldManager.g.RegisterEntity(this);
+            _registered = true;
+        }
+    }
 
-	public void RegisterMe () {
-		if (!_registered) {
-			WorldManager.g.RegisterEntity(this);
-			_registered = true;
-		}
-	}
+    public void DeregisterMe()
+    {
+        if (_registered)
+        {
+            WorldManager.g.DeregisterEntity(this);
+            _registered = false;
+        }
+    }
 
-	public void DeregisterMe () {
-		if (_registered) {
-			WorldManager.g.DeregisterEntity(this);
-			_registered = false;
-		}
-	}
+    void Start()
+    {
+        RegisterMe();
+    }
+    public void Pushed(Direction direction)
+    {
+        isPushed = true;
+        pushedDirection = direction;
+    }
 
-	void Start () {
-		RegisterMe();
-	}
-	public void Pushed(Direction direction){
-		isPushed=true;
-		pushedDirection=direction;
-	}
-
-	public delegate void SimulatorDelegates();
+    public delegate void SimulatorDelegates();
     public SimulatorDelegates Simulators;
 
-	public void Simulate() {
-		if (Simulators != null) {
-			Simulators();
-		}
-	}
+    public void Simulate()
+    {
+        if (Simulators != null)
+        {
+            Simulators();
+        }
+    }
 }

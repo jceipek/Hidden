@@ -9,6 +9,8 @@ public class MapEditor : MonoBehaviour
     GameObject Char1;
     [SerializeField]
     GameObject Char2;
+    [SerializeField]
+    private GameObject _pusherPreFab;
     private string _sLevelName = "Levels/map.xml";
 
     WorldManager worldManage;
