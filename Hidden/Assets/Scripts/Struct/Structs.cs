@@ -55,6 +55,12 @@ public struct SavableLevel
         West
     }
 
+    public enum EntityType{
+        Character1
+        ,Character2
+        ,Pusher
+    }
+
 public class Structs : MonoBehaviour {
 	
 }

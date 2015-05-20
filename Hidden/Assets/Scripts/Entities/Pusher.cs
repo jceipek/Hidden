@@ -28,6 +28,7 @@ public class Pusher : MonoBehaviour
     {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Colliding;
+        _worldEntity.entityType = EntityType.Pusher;
 
     }
 

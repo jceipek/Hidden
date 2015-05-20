@@ -21,6 +21,9 @@ public class Character : MonoBehaviour
     private Direction _direction;
     private bool _bMove;
 
+    [SerializeField]
+    int _iCharacterID;
+
     //[SerializeField]
     //Direction _facing;
 
@@ -33,6 +36,14 @@ public class Character : MonoBehaviour
     {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
+        if(_iCharacterID == 1)
+        {
+            _worldEntity.entityType = EntityType.Character1;
+        }
+        else if (_iCharacterID == 2)
+        {
+            _worldEntity.entityType = EntityType.Character2;
+        }
     }
 
     void OnEnable()
@@ -105,7 +116,7 @@ public class Character : MonoBehaviour
                 default:
                     break;
             }
-        }		
+        }       
     }
     private void Push()
     {

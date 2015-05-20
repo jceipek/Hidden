@@ -20,6 +20,18 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private GameObject _mainCamera;
 
+    [SerializeField]
+    private Texture _character1Texture;
+    [SerializeField]
+    private Texture _character2Texture;
+    [SerializeField]
+    private Texture _floorTexture;
+    [SerializeField]
+    private Texture _wallTexture;
+    [SerializeField]
+    private Texture _pusherTexture;
+
+
     public static WorldManager g;
 
     public void RegisterEntity(WorldEntity e)
@@ -54,8 +66,8 @@ public class WorldManager : MonoBehaviour
 
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
-        _mainCamera.transform.position=new Vector3(_dims.x/2, _dims.y/2,-12f);
-        _mainCamera.GetComponent<Camera>().orthographicSize=Mathf.Min(_dims.x,_dims.y)/2+2;
+        _mainCamera.transform.position = new Vector3(_dims.x / 2, _dims.y / 2, -12f);
+        _mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) / 2 + 2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
         
@@ -200,7 +212,7 @@ public class WorldManager : MonoBehaviour
 
     public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, int range, int ID, float timeInterval)
     {
-        if(_world[location.x,location.y]==TileType.Wall)
+        if (_world[location.x, location.y] == TileType.Wall)
         {
             print("error! entity on the wall!");
         }
@@ -225,26 +237,42 @@ public class WorldManager : MonoBehaviour
                 switch (_world[x, y])
                 {
                     case TileType.Floor:
-                        Gizmos.color = Color.green;
+                        //Gizmos.color = Color.green;
+                        Gizmos.DrawGUITexture(new Rect(x * _tileSize, y * _tileSize, _tileSize / 2f, _tileSize / 2f), _floorTexture);
                         break;
                     case TileType.Empty:
-                        Gizmos.color = Color.blue;
+                        //Gizmos.color = Color.blue;
                         break;
                     case TileType.Wall:
-                        Gizmos.color = Color.red;
+                        Gizmos.DrawGUITexture(new Rect(x * _tileSize, y * _tileSize, _tileSize / 2f, _tileSize / 2f), _wallTexture);
+                        //Gizmos.color = Color.red;
                         break;
                     default:
                         Gizmos.color = Color.black;
                         break;
                 }
-                Gizmos.DrawCube(new Vector3(x * _tileSize + _tileSize / 2f, y * _tileSize + _tileSize / 2f, 0f), Vector3.one * _tileSize * 0.9f);
+                
+                //Gizmos.DrawCube(new Vector3(x * _tileSize + _tileSize / 2f, y * _tileSize + _tileSize / 2f, 0f), Vector3.one * _tileSize * 0.9f);
             }
         }
 
         foreach (WorldEntity e in _entities)
         {
             IntVector l = e.Location;
-            Gizmos.DrawSphere(l.ToVector2() * _tileSize + new Vector2(_tileSize / 2f, _tileSize / 2f), _tileSize / 2f * 0.8f);
+            //Gizmos.DrawSphere(l.ToVector2() * _tileSize + new Vector2(_tileSize / 2f, _tileSize / 2f), _tileSize / 2f * 0.8f);
+            switch(e.entityType)
+            {
+case EntityType.Character1:
+Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _character1Texture);
+break;
+case EntityType.Character2:
+Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _character2Texture);
+break;
+case EntityType.Pusher:
+Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _pusherTexture);
+break;
+            }
+            
         }
     }
 }
