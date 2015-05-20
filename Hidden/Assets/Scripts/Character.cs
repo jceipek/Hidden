@@ -65,28 +65,24 @@ public class Character : MonoBehaviour
             _input.x -= 1;
             _direction = Direction.West;
             _bMove = true;
-            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_rightKey))
         {
             _input.x += 1;
             _direction = Direction.East;
             _bMove = true;
-            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_upKey))
         {
             _input.y += 1;
             _direction = Direction.North;
             _bMove = true;
-            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_downKey))
         {
             _input.y -= 1;
             _direction = Direction.South;
             _bMove = true;
-            print("_direction "+_input);
         }
 
         if (_worldEntity.isPushed)
@@ -107,15 +103,12 @@ public class Character : MonoBehaviour
             {
                 case MoveResult.Move:
                     Move();
-                    print(_iCharacterID+"move");
                     break;
                 case MoveResult.Stuck:
                     Stuck();
-                    print(_iCharacterID+"stuck");
                     break;
                 case MoveResult.Push:
                     Push();
-                    print(_iCharacterID+"push");
                     break;
                 default:
                     break;
@@ -151,7 +144,6 @@ public class Character : MonoBehaviour
         //play move animaition
 
         IntVector vec = _worldEntity.Location;
-         print("vec before "+vec+" input "+_input);
         if (_input.x != 0)
         {
             vec.x += _input.x;
@@ -163,6 +155,5 @@ public class Character : MonoBehaviour
             _input.y = 0;            
         }
         _worldEntity.Location = vec;
-        print("vec after "+vec);
     }
 }
