@@ -59,30 +59,34 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        _input = new IntVector(Vector2.zero);
+        //_input = new IntVector(Vector2.zero);
         if (Input.GetKeyDown(_leftKey))
         {
             _input.x -= 1;
             _direction = Direction.West;
             _bMove = true;
+            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_rightKey))
         {
             _input.x += 1;
             _direction = Direction.East;
             _bMove = true;
+            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_upKey))
         {
             _input.y += 1;
             _direction = Direction.North;
             _bMove = true;
+            print("_direction "+_input);
         }
         if (Input.GetKeyDown(_downKey))
         {
             _input.y -= 1;
             _direction = Direction.South;
             _bMove = true;
+            print("_direction "+_input);
         }
 
         if (_worldEntity.isPushed)
@@ -103,62 +107,62 @@ public class Character : MonoBehaviour
             {
                 case MoveResult.Move:
                     Move();
-                    //print("move");
+                    print(_iCharacterID+"move");
                     break;
                 case MoveResult.Stuck:
                     Stuck();
-                    //print("stuck");
+                    print(_iCharacterID+"stuck");
                     break;
                 case MoveResult.Push:
                     Push();
-                    //print("push");
+                    print(_iCharacterID+"push");
                     break;
                 default:
                     break;
             }
+            _bMove = false;
         }       
     }
     private void Push()
     {
         //play push animation
-
         IntVector vec = _worldEntity.Location;
         if (_input.x != 0)
         {
             vec.x += _input.x;
             _input.x = 0;
-            _bMove = false;
         }
         else if (_input.y != 0)
         {
             vec.y += _input.y;
-            _input.y = 0;
-            _bMove = false;
+            _input.y = 0;       
         }
         _worldEntity.Location = vec;
     }
     private void Stuck()
     {
         //play stuck animation
-        _bMove = false;
+        _input.x = 0;
+        _input.y = 0; 
+        
     }
     private void Move()
     {
         //play move animaition
 
         IntVector vec = _worldEntity.Location;
+         print("vec before "+vec+" input "+_input);
         if (_input.x != 0)
         {
             vec.x += _input.x;
             _input.x = 0;
-            _bMove = false;
         }
         else if (_input.y != 0)
         {
             vec.y += _input.y;
-            _input.y = 0;
-            _bMove = false;
+            _input.y = 0;            
         }
         _worldEntity.Location = vec;
+        print("vec after "+vec);
     }
 }
