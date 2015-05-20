@@ -66,8 +66,8 @@ public class WorldManager : MonoBehaviour
 
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
-        _mainCamera.transform.position = new Vector3(_dims.x / 2, _dims.y / 2, -12f);
-        _mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) / 2 + 2;
+        _mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
+        _mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
         
@@ -83,10 +83,6 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetMap();
         mapEditor.SetCharacters();
         mapEditor.SetPushers();
-        
-
-        
-        //Events.g.Raise(new WorldManagerReadyEvent());
 //default map
         /*
         for (int y = 0; y < _dims.y; y++)
@@ -234,17 +230,18 @@ public class WorldManager : MonoBehaviour
         {
             for (int y = 0; y < _dims.y; y++)
             {
+                Rect rect = new Rect(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
                 switch (_world[x, y])
                 {
                     case TileType.Floor:
                         //Gizmos.color = Color.green;
-                        Gizmos.DrawGUITexture(new Rect(x * _tileSize, y * _tileSize, _tileSize / 2f, _tileSize / 2f), _floorTexture);
+                        Gizmos.DrawGUITexture(rect, _floorTexture);
                         break;
                     case TileType.Empty:
                         //Gizmos.color = Color.blue;
                         break;
                     case TileType.Wall:
-                        Gizmos.DrawGUITexture(new Rect(x * _tileSize, y * _tileSize, _tileSize / 2f, _tileSize / 2f), _wallTexture);
+                        Gizmos.DrawGUITexture(rect, _wallTexture);
                         //Gizmos.color = Color.red;
                         break;
                     default:
@@ -259,18 +256,19 @@ public class WorldManager : MonoBehaviour
         foreach (WorldEntity e in _entities)
         {
             IntVector l = e.Location;
+            Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
             //Gizmos.DrawSphere(l.ToVector2() * _tileSize + new Vector2(_tileSize / 2f, _tileSize / 2f), _tileSize / 2f * 0.8f);
-            switch(e.entityType)
+            switch (e.entityType)
             {
-case EntityType.Character1:
-Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _character1Texture);
-break;
-case EntityType.Character2:
-Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _character2Texture);
-break;
-case EntityType.Pusher:
-Gizmos.DrawGUITexture(new Rect(l.ToVector2().x, l.ToVector2().y, _tileSize / 2f, _tileSize / 2f), _pusherTexture);
-break;
+                case EntityType.Character1:
+                    Gizmos.DrawGUITexture(rect, _character1Texture);
+                    break;
+                case EntityType.Character2:
+                    Gizmos.DrawGUITexture(rect, _character2Texture);
+                    break;
+                case EntityType.Pusher:
+                    Gizmos.DrawGUITexture(rect, _pusherTexture);
+                    break;
             }
             
         }
