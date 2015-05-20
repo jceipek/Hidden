@@ -17,6 +17,9 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private GameObject _pusherPreFab;
 
+    [SerializeField]
+    private GameObject _mainCamera;
+
     public static WorldManager g;
 
     public void RegisterEntity(WorldEntity e)
@@ -51,6 +54,8 @@ public class WorldManager : MonoBehaviour
 
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
+        _mainCamera.transform.position=new Vector3(_dims.x/2, _dims.y/2,-12f);
+        _mainCamera.GetComponent<Camera>().orthographicSize=Mathf.Min(_dims.x,_dims.y)/2+2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
         
@@ -79,7 +84,7 @@ public class WorldManager : MonoBehaviour
         }*/
     }
 
-    void Update()
+    void FixedUpdate()
     {
         foreach (WorldEntity e in _entities)
         {

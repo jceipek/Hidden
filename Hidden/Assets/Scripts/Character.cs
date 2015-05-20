@@ -21,8 +21,8 @@ public class Character : MonoBehaviour
     private Direction _direction;
     private bool _bMove;
 
-    [SerializeField]
-    Direction _facing;
+    //[SerializeField]
+    //Direction _facing;
 
     public void Cache()
     {
@@ -44,6 +44,7 @@ public class Character : MonoBehaviour
     {
         _worldEntity.Simulators -= Simulate;
     }
+
 
     void Update()
     {

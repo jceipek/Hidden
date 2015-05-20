@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WorldEntity : MonoBehaviour
 {
-
+//simulate priority later.
     private EntityCollidingType _collidingType;
     public EntityCollidingType CollidingType
     {
